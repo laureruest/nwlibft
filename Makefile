@@ -6,7 +6,7 @@
 #    By: lruiz-es <lruiz-es@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/10 17:37:51 by lruiz-es          #+#    #+#              #
-#    Updated: 2024/03/14 21:02:55 by lruiz-es         ###   ########.fr        #
+#    Updated: 2024/03/14 21:13:37 by lruiz-es         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -113,7 +113,7 @@ obj/get_next_line_utils.o : get_next_line_utils.c libft.h
 	@# BE CAREFULL ABOUT USING SAME BUFFER_SIZE IN THIS AND THE NEXT RULE
 	$(CC) $(CFLAGS) -o $@ get_next_line_utils.c
 
-obj/get_next_line.o : obj/get_next_line_utils.o get_next_line.c libft.h
+obj/get_next_line.o : get_next_line.c obj/get_next_line_utils.o libft.h
 	@#NWSIZE=$$(stat -f %k /)	&& $(CC) $(CFLAGS) -D BUFFER_SIZE=$$NWSIZE -o $@ get_next_line.c
 	@# INSTRUCTIONS for BUFFER_SIZE PARAMETER
 	@# YOU MUST USE THE SAME -D BUFFER_SIZE IN THIS RULE THAN IN RULE ABOVE
