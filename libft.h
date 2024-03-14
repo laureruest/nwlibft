@@ -5,15 +5,43 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lruiz-es <lruiz-es@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/09 17:00:15 by lruiz-es          #+#    #+#             */
-/*   Updated: 2024/03/14 19:52:09 by lruiz-es         ###   ########.fr       */
+/*   Created: 2024/02/17 14:15:38 by lruiz-es          #+#    #+#             */
+/*   Updated: 2024/03/14 20:21:24 by lruiz-es         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
-# define LIBFT_H
-# include <stddef.h>
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 4096
+# endif
+# ifndef STDLIB_H
+#  include <stdlib.h>
+#  define STDLIB_H
+# endif
+# ifndef UNISTD_H
+#  include <unistd.h>
+#  define UNISTD_H
+# endif
 
+struct	s_buffer
+{
+	long long int	idx;
+	long long int	mxlen;
+	char			buf[BUFFER_SIZE];
+};
+
+struct	s_nl
+{
+	long long int	o_size;
+	long long int	nw_size;
+	char			*o_ln;
+	char			*nw_ln;
+};
+
+// implicit BUFFER_SIZE for get_next_line is 4096 bytes
+// for reference look instructions for get_next_line in last lines
+// in this archive, for recompiling with make this library
+char	*get_next_line(int fd);
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
 int		ft_isalnum(int c);
@@ -49,24 +77,10 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
+# define LIBFT_H
 #endif
 /*
-666
 
- *************************************DESCRIPTIONS******************************
- T_SIZE					LIBFT LIBRARY								T_SIZE
-	DEFINITION TYPE t_size
-	t_size is an alias for unsigned long int, like in C Standard Library
-		LIBC fot type size_t
-	*LIBRARY
-		libft Library (libft.a, libft.h)
-	SYNOPSIS
-		#include "libft.h"
-		typedef
-			unsigned long int t_size;
-	DESCRIPTION
-		It's an alias of unsigned long int
-	   
 	
 *****************************************************************************	
 		*  ft_isalpha
@@ -950,7 +964,7 @@ Descripción:    Reserva (utilizando malloc(3)),  genera una string que represen
                 te el valor entero sin signo largo largo, recibido como argumen-
 		to.                                                              
                                                                               
-****************************************************************************** 
+***************************************************************************
 
 FT_STRMAPI             LIBFT C FUNCTIONS LIBRARY                   FT_STRMAPI
 
@@ -1107,6 +1121,29 @@ Funciones autorizadas: write
 
 Descripción:    Envía el numero 'n' al file descriptor dado.
 
+
+******************************************************************************
+
+
+	Function name:	get_next_line
+	Prototype:		char *get_next_line(int fd);
+	Usage:			Including in libraries with get_next_line.h
+	Compiling:
+					With CC **-D BUFFER_SIZE={size bytes}
+					Implicit BUFFER_SIZE = 4096 bytes
+				   			(stat -f %k /Users/lruiz-es)
+					To change compilation go to three last lines in archive
+					Makefile.
+					Implicit makefile behavior is to test stat -f %k /
+					and compile whith -D BUFFER_SIZE={size} FLAG with the
+					cluster size in compilation time
+					See	Makefile.h and edit it!
+
+	Parameters:		fd: The file descriptor to read from
+	Return value:	Read line: correct behavior
+					NULL: there is no nothing else to read, or an error ocurred
+
+	Description: 	The function returns a line readed from a file descriptor
 
 *******************************************************************************
 */
